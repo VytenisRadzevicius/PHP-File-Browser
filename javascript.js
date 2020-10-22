@@ -1,5 +1,45 @@
 var root = 'www'; // Root directory for configuration
 
+$('#dirmodal').on('show.bs.modal', function () {
+  $('#modalAlert').hide();
+  $('#modalAlert').empty();
+  $('#folder').val('');
+  $('#foldersubmit').prop('disabled', true);
+});
+
+$("#folderform").submit(function(e){
+  e.preventDefault();
+
+  let folder = $("#folder").val();
+  if (/^[A-Za-z0-9]+$/.test(folder)) {
+
+    $.ajax({
+      type: "POST",
+      url: "ajax.php",
+      dataType: "JSON",
+      cache: false,
+      data: { 'action': 'create', 'item': folder, 'path': getPath() }
+    }).done(function(json) {
+      $('#modalAlert').show();
+      switch(json['type']) {
+        case 'success':
+          $('#modalAlert').html('Folder <b>'+ json['name'] +'</b> has been created successfuly!');
+          load('folder', getPath())
+          break;
+  
+        case 'error':
+          $('#modalAlert').html('Error! Directory already exists.');
+          break;
+      }
+    });
+  }
+});
+
+$('#folder').on('change input',function(e){
+  let folder = $("#folder").val();
+  if (!/^[A-Za-z0-9]+$/.test(folder)) $('#foldersubmit').prop('disabled', true); else $('#foldersubmit').prop('disabled', false);
+ });
+
 var table = $('#table').DataTable({ // Initialize DataTable
   language: {
     search: "_INPUT_",

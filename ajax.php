@@ -36,6 +36,20 @@ function getFile($p) {// Return data of a file
   return $dataArr;
 }
 
+function createFolder($p) {
+  if(isset($_POST['item'])) {
+    $dir = $p . '\\' . $_POST['item'];
+    if (!is_dir($dir)) { 
+      mkdir($dir);
+      $dataArr['type'] = 'success';
+      $dataArr['name'] = $_POST['item'];
+    } else {
+      $dataArr['type'] = 'error';
+    }
+  }
+  return $dataArr;
+}
+
 switch ($action) { // Carry out the action
   case 'folder':
     $dataArr = getFolder($path);
@@ -43,6 +57,10 @@ switch ($action) { // Carry out the action
 
   case 'file':
     $dataArr = getFile($path);
+    break;
+
+  case 'create':
+    $dataArr = createFolder($path);
     break;
 
   default:

@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+if(isset($_SESSION['user'])) { 
+  $user = $_SESSION['user'];
+} else {
+  header("Location: login.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -36,11 +45,12 @@
 
     <span id="breadcrumb" class="d-flex text-truncate"></span>
 
-    <!-- For the next Sprint -->
-    <!-- <div class="ml-auto text-nowrap">
-      <a href="#" class="btn btn-outline-secondary py-0">Admin Panel <i class="fas fa-cog"></i></a>
-      <a href="#" class="btn btn-outline-secondary py-0">Logout <i class="fas fa-sign-out-alt"></i></a>
-    </div> -->
+    <div class="ml-auto text-nowrap">
+      <?= $user; ?> <i class="fas fa-user mr-2"></i>
+      <!-- <a href="#" class="btn btn-outline-secondary py-0">Admin Panel <i class="fas fa-cog"></i></a> -->
+      <button id="newdir" class="btn btn-outline-secondary py-0" data-toggle="modal" data-target="#dirmodal">New Folder <i class="fas fa-folder"></i></button>
+      <a href="logout.php" class="btn btn-outline-secondary py-0">Logout <i class="fas fa-sign-out-alt"></i></a>
+    </div>
 
   </ol>
 </nav>
@@ -65,7 +75,7 @@
 
 </div>
 
-<!-- Modal -->
+<!-- Modals -->
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -77,6 +87,28 @@
       </div>
 
       <div id="modalBody" class="modal-body overflow-auto"></div>
+
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="dirmodal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header font-weight-bold">Create New Folder
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div id="modalBody" class="modal-body">
+        <div id="modalAlert" class="alert alert-warning fade show"></div>
+        Enter the name of the new folder:<br><br>
+        <form id="folderform">
+          <input type="text" id="folder" name="folder" class="form-control" required><br>
+          <button class="btn btn-lg btn-primary btn-block" id="foldersubmit" type="submit" disabled>Create New Folder</button>
+        </form>
+    </div>
 
     </div>
   </div>
