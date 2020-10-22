@@ -30,11 +30,15 @@ else {
 
   <!-- Login -->
   <form action="login.php" method="post">
-      <h1 class="h3 mb-3">Please sign in</h1>
+      <h1 class="h3 mb-3">
+      <span class="fa-stack fa-sm mr-2 text-primary">
+        <i class="fas fa-circle fa-stack-2x"></i>
+        <i class="fas fa-folder-open fa-stack-1x fa-inverse"></i>
+      </span>Please sign in</h1>
       <div class="alert-danger"><?= $msg; ?></div>
       
-      <input type="text" name="username" class="form-control" placeholder="admin" value="admin" required>
-      <input type="text" name="password" class="form-control" placeholder="admin123" value="admin123" required>
+      <input type="text" name="username" class="form-control mb-2" placeholder="admin" value="admin" required>
+      <input type="text" name="password" class="form-control mb-2" placeholder="admin123" value="admin123" required>
       <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in <i class="fa fa-sign-in-alt"></i></button>
 
       <p class="mt-5 mb-3 text-muted">PHP-File-Browser</p>
